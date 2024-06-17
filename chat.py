@@ -2,17 +2,17 @@ import requests
 from bs4 import BeautifulSoup
 
 def read( word ):
-    url = f'https://dict.revised.moe.edu.tw/search.jsp?md=1&word={word}#searchL'
+    url = f'https://sutian.moe.edu.tw/zh-hant/tshiau/?lui=tai_su&tsha={word}#table d-md-none'
 
     html = requests.get( url )
     bs = BeautifulSoup(html.text,'lxml')
-    data = bs.find('table', id='searchL')
+    data = bs.find('table', id='table d-md-none')
     try:
-        row = data.find_all('tr')[2]
-        chinese = row.find('cr').text
-        phones = row.find_all('code')
+        row = data.find_all('tr')[1]
+        chinese = row.find('a').text.strip()
+        phones = data.find_all('td')[2]
         phone = [e.text for e in phones]
-        s = " ".join( phone )
+        s = " ".join( phone ).split()[0]
         # s = row.find('sub')
         #print( chinese, s )
         return chinese + ' => ' + s
