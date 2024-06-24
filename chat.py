@@ -17,4 +17,5 @@ def read( word ):
         #print( chinese, s )
         return chinese + ' => ' + s
     except:
-        print( '查無此字' )
+        #print( '查無此字' )
+        return '查無此字'
